@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ReLife</string>
+    <string name="login">Giriş</string>
+    <string name="name">Kullanıcı Adı</string>
+    <string name="kullanici_adi">Kullanıcı Adı</string>
+    <string name="sifre">Şifre</string>
+    <string name="error_box"> </string>
+    <string name="user_name">Kullanıcı Adı</string>
+    <string name="user_password">Şifre</string>
+    <string name="apple">apple</string>
+    <string name="orange">orange</string>
+    <string name="dragon">dragon</string>
+    <string name="pear">pear</string>
+    <string name="drop_target">drop target</string>
+</resources>
