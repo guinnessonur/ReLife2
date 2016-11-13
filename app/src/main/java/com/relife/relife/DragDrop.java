@@ -27,10 +27,6 @@ public class DragDrop extends Activity {
         findViewById(R.id.textorange).setOnLongClickListener(longListen);
         findViewById(R.id.textdragon).setOnLongClickListener(longListen);
         findViewById(R.id.textpear).setOnLongClickListener(longListen);
-
-
-
-
     }
 
     View.OnLongClickListener longListen =new View.OnLongClickListener(){
