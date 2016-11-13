@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
+//sa
 public class DragNDrop extends AppCompatActivity {
 
     @Override
