@@ -30,6 +30,8 @@
         <LinearLayout
             android:id="@+id/i5"
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -37,6 +39,8 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/i6"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:orientation="vertical"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -45,6 +49,8 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/i7"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:orientation="vertical"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -53,6 +59,8 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/i8"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:orientation="vertical"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -62,6 +70,8 @@
         <LinearLayout
             android:id="@+id/i9"
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_column="4"
@@ -70,6 +80,8 @@
         <LinearLayout
             android:id="@+id/i10"
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_column="5"
@@ -83,6 +95,8 @@
         <LinearLayout
             android:id="@+id/i11"
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -91,6 +105,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i12"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -99,6 +115,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i13"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -107,6 +125,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i14"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -115,6 +135,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i15"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -123,6 +145,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i16"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -136,6 +160,8 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i17"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -144,6 +170,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i18"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -152,6 +180,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i19"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -160,6 +190,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i20"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -168,6 +200,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i21"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -176,6 +210,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i22"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -189,6 +225,8 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i23"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -197,6 +235,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i0"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -205,6 +245,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i1"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -213,6 +255,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i2"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -221,6 +265,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i3"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
@@ -229,6 +275,8 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:layout_height="20dp"
+            android:layout_width="20dp"
             android:id="@+id/i4"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
