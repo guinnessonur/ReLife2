@@ -299,6 +299,7 @@
             android:layout_row="3">
         </LinearLayout>
         <LinearLayout
+
             android:orientation="vertical"
             android:layout_height="20dp"
             android:layout_width="20dp"
