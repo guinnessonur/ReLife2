@@ -1,61 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="2"
-    android:columnWidth="320dp"
     android:orientation="vertical"
-    android:rowCount="2"
     android:stretchMode="columnWidth" >
 
+
     <LinearLayout
-        android:id="@+id/topleft"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_row="0"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/six"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/six" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/seven"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/seven" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/eight"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/eight" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/nine"
+            android:id="@+id/nine" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ten"
+            android:id="@+id/ten" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/eleven"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/eleven" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/twelve"
+            android:gravity="center"
+
+            android:id="@+id/twelve" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/thirteen"
+            android:id="@+id/thirteen" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/fourteen"
+            android:gravity="center"
+            android:id="@+id/fourteen" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/fifteen"
+            android:id="@+id/fifteen" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/sixteen"
+            android:id="@+id/sixteen" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/seventeen"
+            android:id="@+id/seventeen" />
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/eighteen"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/eighteen" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/nineteen"
+            android:id="@+id/nineteen" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/twenty"
+            android:id="@+id/twenty" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/twentyone"
+            android:id="@+id/twentyone" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/twentytwo"
+            android:id="@+id/twentytwo" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/twentythree"
+            android:id="@+id/twentythree" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/twentyfour"
+            android:id="@+id/twentyfour" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/one"
+            android:id="@+id/one" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/two"
+            android:id="@+id/two" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/three"
+            android:id="@+id/three" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/four"
+            android:id="@+id/four" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/five"
+            android:id="@+id/five" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/button"
+            android:text="@string/custom_activity"
+            android:onClick="addActivity"/>
+
+    </RelativeLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2"
         >
-        <ImageView
-            android:id="@+id/myimage1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/topright"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        >
-        <ImageView
-            android:id="@+id/myimage2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/bottomleft"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        >
 
-        <ImageView
-            android:id="@+id/myimage3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/bottomright"
-        android:layout_width="160dp"
-        android:layout_height="160dp" >
 
-        <ImageView
-            android:id="@+id/myimage4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
-    </LinearLayout>
 
-</GridLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
