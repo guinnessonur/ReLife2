@@ -25,7 +25,9 @@ import android.widget.Toast;
 //asss
 public class DragNDrop extends Activity {
 
-    LinearLayout[] layouts = new LinearLayout[24];
+    static LinearLayout[] layouts = new LinearLayout[24];
+    static TextView[] textViews = new TextView[24];
+    static int lastLayout = -1;
 
     static Context context;
     @Override
@@ -43,6 +45,7 @@ public class DragNDrop extends Activity {
             tv.setText("" + i);
             tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             layouts[i].addView(tv);
+            textViews[i] = tv;
         }
         for(int i = 0; i < layouts.length; i++){
             layouts[i].setOnDragListener(new dragListener());
@@ -85,9 +88,22 @@ class dragListener implements View.OnDragListener {
                 View view = (View) event.getLocalState();
                 ViewGroup owner = (ViewGroup) view.getParent();
                 owner.removeView(view);
+
                 LinearLayout container = (LinearLayout) v;
                 container.removeAllViews();
                 container.addView(view);
+
+                if(DragNDrop.lastLayout != -1){
+                    owner.addView(DragNDrop.textViews[DragNDrop.lastLayout]);
+                }
+
+                for(int i = 0; i < DragNDrop.layouts.length; i++){
+                    if(container.getId() == DragNDrop.layouts[i].getId()){
+                        DragNDrop.lastLayout = i;
+                        break;
+                    }
+                }
+
                 view.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
