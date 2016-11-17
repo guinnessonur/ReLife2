@@ -2,8 +2,10 @@ package com.relife.relife;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,30 +15,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //saaa
 //asss
-public class DragNDrop extends AppCompatActivity {
+public class DragNDrop extends Activity {
 
+    LinearLayout[] layouts = new LinearLayout[24];
+
+    static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_drag_ndrop);
-
-    }
-
-
-    public void addActivity(View view) {
-        TextView myTextView = new TextView(this);
-        myTextView.setText("Push Me");
-
-        ScrollView ll = (ScrollView) findViewById(R.id.scrollView2);
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        ll.addView(myTextView, lp);
+        ImageView image = (ImageView) findViewById(R.id.imageView3);
+        image.setImageResource(R.mipmap.ic_launcher);
+        for(int i = 0; i < layouts.length; i++){
+            int resID = getResources().getIdentifier("i"+i, "id", getPackageName());
+            layouts[i] = (LinearLayout) findViewById(resID);
+        }
+        for(int i = 0; i < layouts.length; i++){
+            TextView tv = new TextView(this);
+            tv.setText("" + i);
+            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            layouts[i].addView(tv);
+        }
+        for(int i = 0; i < layouts.length; i++){
+            layouts[i].setOnDragListener(new dragListener());
+        }
+        findViewById(R.id.imageView3).setOnTouchListener(new touchListener());
     }
 }
 
@@ -75,6 +86,7 @@ class dragListener implements View.OnDragListener {
                 ViewGroup owner = (ViewGroup) view.getParent();
                 owner.removeView(view);
                 LinearLayout container = (LinearLayout) v;
+                container.removeAllViews();
                 container.addView(view);
                 view.setVisibility(View.VISIBLE);
                 break;
@@ -84,6 +96,7 @@ class dragListener implements View.OnDragListener {
         }
         return true;
     }
+
 
 
 }
