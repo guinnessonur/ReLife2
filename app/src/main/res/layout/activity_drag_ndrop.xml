@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFF1D8"
     android:stretchMode="columnWidth" >
 
 
@@ -104,11 +105,7 @@
             android:gravity="center"
             android:text="@string/seventeen"
             android:id="@+id/seventeen" />
-
     </LinearLayout>
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -217,15 +214,15 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
+            android:background="@drawable/roundedbutton"
             android:id="@+id/button"
-            android:text="@string/custom_activity"
+            android:text="+"
             android:onClick="addActivity"/>
 
     </RelativeLayout>
-
 
 
     <ScrollView

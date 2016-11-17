@@ -12,7 +12,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="insert date here"
+            android:label="ReLife"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
