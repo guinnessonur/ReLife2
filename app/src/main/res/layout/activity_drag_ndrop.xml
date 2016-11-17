@@ -310,6 +310,7 @@
             android:layout_row="3">
         </LinearLayout>
     </GridLayout>
+    <!-- xdxdxd -->
     <Button
         android:id="@+id/new_activity"
         android:layout_below="@id/grid"
