@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FFF1D8"
+    android:background="#E0C8A6"
     tools:context="com.relife.relife.MainActivity"
     >
 
@@ -28,6 +28,7 @@
             android:layout_below="@+id/imageView"
             android:paddingLeft="25dp"
             android:text="ReLife Daily Scheduler"
+            android:textColor="#574338"
             android:textAlignment="center"
             android:textSize="20sp"
             />
@@ -50,6 +51,8 @@
         android:id="@+id/scrollView"
         android:layout_below="@id/button">
         <LinearLayout
+            android:layout_gravity="center"
+            android:background="@drawable/scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
