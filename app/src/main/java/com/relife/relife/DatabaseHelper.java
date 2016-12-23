@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper  {
 
@@ -63,6 +65,18 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
     }
     public static void delete(SQLiteDatabase db, String data, String name){
         db.execSQL("DELETE FROM " + data.toUpperCase() + " WHERE NAME = " + name);
+    }
+    public static Cursor list_items(SQLiteDatabase db, Context context){
+        Cursor cursor = null;
+        try{
+            cursor = db.query("SCHEDULE", new String[] {"name", "activity", "day", "month", "year"}, null, null, null, null, null);
+        }
+        catch(SQLiteException e){
+            Toast toast = Toast.makeText(context, "Database Unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+        return cursor;
     }
 
 

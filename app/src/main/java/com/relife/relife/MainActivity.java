@@ -2,6 +2,8 @@ package com.relife.relife;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -15,12 +17,18 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class MainActivity extends Activity {
+    DatabaseHelper helper;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImageView iv = (ImageView) findViewById(R.id.imageView);
+
+        helper=new DatabaseHelper(this);
+        db=helper.getWritableDatabase();
+
         iv.setImageResource(R.drawable.nature);
 
         Button btn = (Button) findViewById(R.id.button);
@@ -31,6 +39,11 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent, 1);
             }
         });
+        displaySchedule();
+    }
+    public void displaySchedule(){
+        Cursor cursor = helper.list_items(db, getApplicationContext());
+        LinearLayout eclair = (LinearLayout) findViewById(R.id.list);
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
