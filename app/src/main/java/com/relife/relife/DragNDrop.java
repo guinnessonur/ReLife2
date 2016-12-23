@@ -40,8 +40,12 @@ public class DragNDrop extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drag_ndrop);
         context = getApplicationContext();
-        //ImageView image = (ImageView) findViewById(R.id.imageView3);
-        //image.setImageResource(R.mipmap.ic_launcher);
+        Intent good_intention = getIntent();
+        int year = good_intention.getIntExtra("year", 1996);
+        int month = good_intention.getIntExtra("month", 2);
+        int day = good_intention.getIntExtra("day", 25);
+        TextView textDate = (TextView) findViewById(R.id.textDate);
+        textDate.setText(day + " . " + month + " . " + year);
         for(int i = 0; i < layouts.length; i++){
             int resID = getResources().getIdentifier("i"+i, "id", getPackageName());
             layouts[i] = (LinearLayout) findViewById(resID);
