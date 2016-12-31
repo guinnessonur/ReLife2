@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
     public static Cursor list_items(SQLiteDatabase db, Context context){
         Cursor cursor = null;
         try{
-            cursor = db.query("SCHEDULE", new String[] {"name", "activity", "hour", "day", "month", "year"}, null, null, null, null, null);
+            cursor = db.query("SCHEDULE", new String[] {"name", "activity", "hour", "day", "month", "year"}, null, null, null, null, "year ASC, month ASC, day ASC, hour ASC");
         }
         catch(SQLiteException e){
             Toast toast = Toast.makeText(context, "Database Unavailable", Toast.LENGTH_SHORT);

@@ -31,11 +31,15 @@ public class MainActivity extends Activity {
         int last_month = 0;
         int last_year = 0;
         for(int i = 0; i < cursor.getCount(); i++){
+            // 5 == year
+            // 4 == month
+            // 3 == day
+            // 2 == hour
             int which = Integer.parseInt(cursor.getString(1));
-            int day = Integer.parseInt(cursor.getString(2));
-            int month = Integer.parseInt(cursor.getString(3));
-            int year = Integer.parseInt(cursor.getString(4));
-            int hour = Integer.parseInt(cursor.getString(5));
+            int day = Integer.parseInt(cursor.getString(3));
+            int month = Integer.parseInt(cursor.getString(4));
+            int year = Integer.parseInt(cursor.getString(5));
+            int hour = Integer.parseInt(cursor.getString(2));
             if(last_day == day && last_month == month && last_year == year){
                 LinearLayout knowledge = new LinearLayout(this);
                 knowledge.setOrientation(LinearLayout.HORIZONTAL);
@@ -50,7 +54,7 @@ public class MainActivity extends Activity {
                 img.setScaleX(0.5f);
                 img.setScaleY(0.5f);
                 TextView text = new TextView(this);
-                text.setText("Time: " + hour + ":00 Activity Name: " + DragNDrop.drawableDesc[which]);
+                text.setText("Time: " + hour + " :00 Activity Name: " + DragNDrop.drawableDesc[which]);
                 text.setTextSize(16);
                 knowledge.addView(img);
                 knowledge.addView(text);
@@ -61,7 +65,7 @@ public class MainActivity extends Activity {
             }
             else{
                 TextView patchouli = new TextView(this);
-                patchouli.setText("Hello World!");
+                patchouli.setText(day + "/" + month + "/" + year);
                 LinearLayout knowledge = new LinearLayout(this);
                 knowledge.setOrientation(LinearLayout.HORIZONTAL);
                 LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
