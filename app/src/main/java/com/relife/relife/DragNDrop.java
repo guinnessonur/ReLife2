@@ -5,12 +5,14 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -35,15 +37,24 @@ public class DragNDrop extends Activity {
     static Drawable[] drawables = new Drawable[6];
     static String[] drawableDesc = new String[6];
 
+    DatabaseHelper helper;
+    SQLiteDatabase db;
+
+    int day;
+    int month;
+    int year;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drag_ndrop);
+        helper = new DatabaseHelper(this);
+        db = helper.getWritableDatabase();
         context = getApplicationContext();
         Intent good_intention = getIntent();
-        int year = good_intention.getIntExtra("year", 1996);
-        int month = good_intention.getIntExtra("month", 2);
-        int day = good_intention.getIntExtra("day", 25);
+        year = good_intention.getIntExtra("year", 1996);
+        month = good_intention.getIntExtra("month", 2);
+        day = good_intention.getIntExtra("day", 25);
         TextView textDate = (TextView) findViewById(R.id.textDate);
         textDate.setText(day + " . " + month + " . " + year);
         for(int i = 0; i < layouts.length; i++){
@@ -83,7 +94,7 @@ public class DragNDrop extends Activity {
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
-            param.setMargins(50, 50, 30, 0);
+            param.setMargins(10, 0, 0, 0);
             ll.setLayoutParams(param);
             ll.setGravity(Gravity.CENTER_VERTICAL);
             ImageView img = new ImageView(this);
@@ -104,19 +115,29 @@ public class DragNDrop extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent bad_intention = new Intent();
-                bad_intention.putExtra("result", "your message");
-                setResult(RESULT_OK, bad_intention);
+                for(int i = 0; i < layouts.length; i++){
+                    View view = DragNDrop.layouts[i].getChildAt(0);
+                    if (view instanceof ImageView) {
+                        ImageView imageView = (ImageView) view;
+                        int which = -1;
+                        for(int j = 0; j < DragNDrop.drawables.length; j++){
+                            if(DragNDrop.drawables[j].equals(imageView.getDrawable())){
+                                which = j;
+                                break;
+                            }
+                        }
+                        if(which != -1){
+                            helper.insertSchedule(db, drawableDesc[which], which, i, day, month, year);
+                            Log.v("insertDatabase", drawableDesc[which] + " " + which + " " + i + " " + day + " " + month + " " + year);
+                        }
+                    }
+                }
                 finish();
             }
         });
-        //findViewById(R.id.imageView3).setOnTouchListener(new touchListener());
     }
 }
-
-
 class touchListener implements View.OnTouchListener {
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN){
@@ -131,9 +152,7 @@ class touchListener implements View.OnTouchListener {
         }
     }
 }
-
 class dragListener implements View.OnDragListener {
-
     @Override
     public boolean onDrag(View v, DragEvent event) {
         int action = event.getAction();
@@ -153,16 +172,6 @@ class dragListener implements View.OnDragListener {
                 imageView.setScaleX(0.5f);
                 imageView.setScaleY(0.5f);
                 container.addView(imageView);
-//                if(DragNDrop.lastLayout != -1){
-//                    owner.addView(DragNDrop.textViews[DragNDrop.lastLayout]);
-//                }
-//
-//                for(int i = 0; i < DragNDrop.layouts.length; i++){
-//                    if(container.getId() == DragNDrop.layouts[i].getId()){
-//                        DragNDrop.lastLayout = i;
-//                        break;
-//                    }
-//                }
                 view.setVisibility(View.VISIBLE);
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
@@ -171,7 +180,4 @@ class dragListener implements View.OnDragListener {
         }
         return true;
     }
-
-
-
 }

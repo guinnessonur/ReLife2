@@ -22,6 +22,7 @@ public class DateActivity extends AppCompatActivity {
                 bad_intention.putExtra("month", month);
                 bad_intention.putExtra("year", year);
                 startActivity(bad_intention);
+                finish();
             }
         });
     }

@@ -10,18 +10,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".DragNDrop"
-            android:label="ReLife"></activity>
+            android:label="ReLife">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="ReLife">
-
-        </activity>
-        <activity android:name=".DateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".DateActivity">
+
         </activity>
     </application>
 

@@ -20,6 +20,75 @@ public class MainActivity extends Activity {
     DatabaseHelper helper;
     SQLiteDatabase db;
 
+    public void showSchedule(){
+        LinearLayout sakuya = (LinearLayout) findViewById(R.id.list);
+        sakuya.removeAllViews();
+        Cursor cursor = helper.list_items(db, getApplicationContext());
+        if(cursor == null)
+            return;
+        cursor.moveToFirst();
+        int last_day = 0;
+        int last_month = 0;
+        int last_year = 0;
+        for(int i = 0; i < cursor.getCount(); i++){
+            int which = Integer.parseInt(cursor.getString(1));
+            int day = Integer.parseInt(cursor.getString(2));
+            int month = Integer.parseInt(cursor.getString(3));
+            int year = Integer.parseInt(cursor.getString(4));
+            int hour = Integer.parseInt(cursor.getString(5));
+            if(last_day == day && last_month == month && last_year == year){
+                LinearLayout knowledge = new LinearLayout(this);
+                knowledge.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
+                param.setMargins(20, 20, 20, 0);
+                knowledge.setLayoutParams(param);
+                knowledge.setGravity(Gravity.CENTER_VERTICAL);
+                ImageView img = new ImageView(this);
+                img.setImageDrawable(DragNDrop.drawables[which]);
+                img.setScaleX(0.5f);
+                img.setScaleY(0.5f);
+                TextView text = new TextView(this);
+                text.setText("Time: " + hour + ":00 Activity Name: " + DragNDrop.drawableDesc[which]);
+                text.setTextSize(16);
+                knowledge.addView(img);
+                knowledge.addView(text);
+                sakuya.addView(knowledge);
+                last_day = day;
+                last_month = month;
+                last_year = year;
+            }
+            else{
+                TextView patchouli = new TextView(this);
+                patchouli.setText("Hello World!");
+                LinearLayout knowledge = new LinearLayout(this);
+                knowledge.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
+                param.setMargins(20, 20, 20, 0);
+                knowledge.setLayoutParams(param);
+                knowledge.setGravity(Gravity.CENTER_VERTICAL);
+                ImageView img = new ImageView(this);
+                img.setImageDrawable(DragNDrop.drawables[which]);
+                img.setScaleX(0.5f);
+                img.setScaleY(0.5f);
+                TextView text = new TextView(this);
+                text.setText("Time: " + hour + ":00 Activity Name: " + DragNDrop.drawableDesc[which]);
+                text.setTextSize(16);
+                knowledge.addView(img);
+                knowledge.addView(text);
+                sakuya.addView(patchouli);
+                sakuya.addView(knowledge);
+                last_day = day;
+                last_month = month;
+                last_year = year;
+            }
+            cursor.moveToNext();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,61 +104,13 @@ public class MainActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DragNDrop.class);
-                startActivityForResult(intent, 1);
+                Intent intent = new Intent(MainActivity.this, DateActivity.class);
+                startActivityForResult(intent, 0);
             }
         });
-        displaySchedule();
-    }
-    public void displaySchedule(){
-        Cursor cursor = helper.list_items(db, getApplicationContext());
-        LinearLayout eclair = (LinearLayout) findViewById(R.id.list);
+        showSchedule();
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                LinearLayout sakuya = (LinearLayout) findViewById(R.id.list);
-                sakuya.removeAllViews();
-                String result = data.getStringExtra("result");
-                for(int i = 0; i < DragNDrop.layouts.length; i++){
-                    View view = DragNDrop.layouts[i].getChildAt(0);
-                    if (view instanceof ImageView) {
-                        ImageView imageView = (ImageView) view;
-                        int which = -1;
-                        for(int j = 0; j < DragNDrop.drawables.length; j++){
-                            if(DragNDrop.drawables[j].equals(imageView.getDrawable())){
-                                which = j;
-                                break;
-                            }
-                        }
-                        if(which!=-1){
-                            LinearLayout patchouli = (LinearLayout) findViewById(R.id.list);
-                            LinearLayout knowledge = new LinearLayout(this);
-                            knowledge.setOrientation(LinearLayout.HORIZONTAL);
-                            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
-                            param.setMargins(50, 50, 30, 0);
-                            knowledge.setLayoutParams(param);
-                            knowledge.setGravity(Gravity.CENTER_VERTICAL);
-                            ImageView img = new ImageView(this);
-                            img.setImageDrawable(DragNDrop.drawables[which]);
-                            img.setScaleX(0.5f);
-                            img.setScaleY(0.5f);
-                            TextView text = new TextView(this);
-                            text.setText("Time: " + i + ":00 Activity Name: " + DragNDrop.drawableDesc[which]);
-                            text.setTextSize(16);
-                            knowledge.addView(img);
-                            knowledge.addView(text);
-                            patchouli.addView(knowledge);
-                        }
-                    }
-                }
-            }
-            if (resultCode == RESULT_CANCELED) {
-                // Write your code if there's no result
-            }
-        }
+        showSchedule();
     }
 }

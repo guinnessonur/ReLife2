@@ -51,7 +51,6 @@
         android:id="@+id/scrollView"
         android:layout_below="@id/button">
         <LinearLayout
-            android:layout_gravity="center"
             android:background="@drawable/scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

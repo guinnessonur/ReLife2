@@ -23,27 +23,26 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE SCHEDULE (_id INTEGER PRIMARY KEY AUTOINCREMENT "+
+        db.execSQL("CREATE TABLE SCHEDULE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 "name TEXT, "+
                 "activity INTEGER, "+
+                "hour INTEGER, " +
                 "day INTEGER, "+
                 "year INTEGER, "+
                 "month INTEGER);");
-        db.execSQL("CREATE TABLE ACTIVITY (id INTEGER PRIMARY KEY "+
+        db.execSQL("CREATE TABLE ACTIVITY (id INTEGER PRIMARY KEY, "+
                 "name TEXT, "+
                 "activity INTEGER);");
-
-
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public static void insertSchedule(SQLiteDatabase db, String name, int activity, int day, int month, int year){
+    public static void insertSchedule(SQLiteDatabase db, String name, int activity, int hour, int day, int month, int year){
         ContentValues contactValues=new ContentValues();
         contactValues.put("name", name);
         contactValues.put("activity", activity);
+        contactValues.put("hour", hour);
         contactValues.put("day", day);
         contactValues.put("month", month);
         contactValues.put("year", year);
@@ -56,7 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
         db.insert("ACTIVITY", null, contentValues);
     }
     public static Cursor showItems(SQLiteDatabase db,Context context ){
-
         cursor=db.query("GROCERYLIST",new String[]{"element","state"},null,null,null,null,null);
         return cursor;
     }
@@ -69,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
     public static Cursor list_items(SQLiteDatabase db, Context context){
         Cursor cursor = null;
         try{
-            cursor = db.query("SCHEDULE", new String[] {"name", "activity", "day", "month", "year"}, null, null, null, null, null);
+            cursor = db.query("SCHEDULE", new String[] {"name", "activity", "hour", "day", "month", "year"}, null, null, null, null, null);
         }
         catch(SQLiteException e){
             Toast toast = Toast.makeText(context, "Database Unavailable", Toast.LENGTH_SHORT);
