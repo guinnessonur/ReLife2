@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +20,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends Activity {
     DatabaseHelper helper;
     SQLiteDatabase db;
+    static Drawable[] drawables = new Drawable[6];
 
     public void showSchedule(){
         LinearLayout sakuya = (LinearLayout) findViewById(R.id.list);
@@ -40,6 +42,7 @@ public class MainActivity extends Activity {
             int month = Integer.parseInt(cursor.getString(4));
             int year = Integer.parseInt(cursor.getString(5));
             int hour = Integer.parseInt(cursor.getString(2));
+            String description = cursor.getString(0);
             if(last_day == day && last_month == month && last_year == year){
                 LinearLayout knowledge = new LinearLayout(this);
                 knowledge.setOrientation(LinearLayout.HORIZONTAL);
@@ -50,11 +53,11 @@ public class MainActivity extends Activity {
                 knowledge.setLayoutParams(param);
                 knowledge.setGravity(Gravity.CENTER_VERTICAL);
                 ImageView img = new ImageView(this);
-                img.setImageDrawable(DragNDrop.drawables[which]);
+                img.setImageDrawable(drawables[which]);
                 img.setScaleX(0.5f);
                 img.setScaleY(0.5f);
                 TextView text = new TextView(this);
-                text.setText("Time: " + hour + " :00 Activity Name: " + DragNDrop.drawableDesc[which]);
+                text.setText("Time: " + hour + " :00 Activity Name: " + description);
                 text.setTextSize(16);
                 knowledge.addView(img);
                 knowledge.addView(text);
@@ -75,11 +78,11 @@ public class MainActivity extends Activity {
                 knowledge.setLayoutParams(param);
                 knowledge.setGravity(Gravity.CENTER_VERTICAL);
                 ImageView img = new ImageView(this);
-                img.setImageDrawable(DragNDrop.drawables[which]);
+                img.setImageDrawable(drawables[which]);
                 img.setScaleX(0.5f);
                 img.setScaleY(0.5f);
                 TextView text = new TextView(this);
-                text.setText("Time: " + hour + ":00 Activity Name: " + DragNDrop.drawableDesc[which]);
+                text.setText("Time: " + hour + ":00 Activity Name: " + description);
                 text.setTextSize(16);
                 knowledge.addView(img);
                 knowledge.addView(text);
@@ -103,6 +106,13 @@ public class MainActivity extends Activity {
         db=helper.getWritableDatabase();
 
         iv.setImageResource(R.drawable.nature);
+
+        drawables[0] = getDrawable(R.drawable.sleep);
+        drawables[1] = getDrawable(R.drawable.gamecontroller);
+        drawables[2] = getDrawable(R.drawable.openbook);
+        drawables[3] = getDrawable(R.drawable.knight);
+        drawables[4] = getDrawable(R.drawable.soccer);
+        drawables[5] = getDrawable(R.drawable.dumbbell);
 
         Button btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
