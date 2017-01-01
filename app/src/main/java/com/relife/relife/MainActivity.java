@@ -68,6 +68,10 @@ public class MainActivity extends Activity {
             }
             else{
                 TextView patchouli = new TextView(this);
+                LinearLayout.LayoutParams textParam = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT,  LinearLayout.LayoutParams.MATCH_PARENT);
+                textParam.setMargins(75, 25, 0, 0);
+                patchouli.setTextSize(18    );
+                patchouli.setLayoutParams(textParam);
                 patchouli.setText(day + "/" + month + "/" + year);
                 LinearLayout knowledge = new LinearLayout(this);
                 knowledge.setOrientation(LinearLayout.HORIZONTAL);
