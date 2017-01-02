@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends Activity {
     DatabaseHelper helper;
     SQLiteDatabase db;
-    static Drawable[] drawables = new Drawable[6];
+    String[] drawables;
 
     public void showSchedule(){
         LinearLayout sakuya = (LinearLayout) findViewById(R.id.list);
@@ -53,7 +55,7 @@ public class MainActivity extends Activity {
                 knowledge.setLayoutParams(param);
                 knowledge.setGravity(Gravity.CENTER_VERTICAL);
                 ImageView img = new ImageView(this);
-                img.setImageDrawable(drawables[which]);
+                img.setImageURI(Uri.parse(drawables[which]));
                 img.setScaleX(0.5f);
                 img.setScaleY(0.5f);
                 TextView text = new TextView(this);
@@ -82,7 +84,7 @@ public class MainActivity extends Activity {
                 knowledge.setLayoutParams(param);
                 knowledge.setGravity(Gravity.CENTER_VERTICAL);
                 ImageView img = new ImageView(this);
-                img.setImageDrawable(drawables[which]);
+                img.setImageURI(Uri.parse(drawables[which]));
                 img.setScaleX(0.5f);
                 img.setScaleY(0.5f);
                 TextView text = new TextView(this);
@@ -110,16 +112,34 @@ public class MainActivity extends Activity {
         db=helper.getWritableDatabase();
 
         iv.setImageResource(R.drawable.nature);
-
-        drawables[0] = getDrawable(R.drawable.sleep);
-        drawables[1] = getDrawable(R.drawable.gamecontroller);
-        drawables[2] = getDrawable(R.drawable.openbook);
-        drawables[3] = getDrawable(R.drawable.knight);
-        drawables[4] = getDrawable(R.drawable.soccer);
-        drawables[5] = getDrawable(R.drawable.dumbbell);
-
-        Button btn = (Button) findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Cursor cursor = helper.listActivities(db, getApplicationContext());
+        if(cursor != null){
+            int size = cursor.getCount();
+            if(size == 0){
+                helper.insertActivity(db, "Sleep", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/sleep")));
+                helper.insertActivity(db, "Game", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/gamecontroller")));
+                helper.insertActivity(db, "Study", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/openbook")));
+                helper.insertActivity(db, "Chess", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/knight")));
+                helper.insertActivity(db, "Soccer", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/soccer")));
+                helper.insertActivity(db, "Work Out", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/dumbbell")));
+            }
+            drawables = new String[size];
+            cursor.moveToFirst();
+            for(int i = 0; i < size; i++){
+                drawables[i] = cursor.getString(1);
+                cursor.moveToNext();
+            }
+        }
+        Button btn1 = (Button) findViewById(R.id.button1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intenttt = new Intent(MainActivity.this, Activities.class);
+                startActivity(intenttt);
+            }
+        });
+        Button btn2 = (Button) findViewById(R.id.button2);
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DateActivity.class);
@@ -128,7 +148,30 @@ public class MainActivity extends Activity {
         });
         showSchedule();
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         showSchedule();
+    }
+
+    public String getPath(Uri uri) {
+        // just some safety built in
+        if( uri == null ) {
+            // TODO perform some logging or show user feedback
+            return null;
+        }
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String path = cursor.getString(column_index);
+            cursor.close();
+            return path;
+        }
+        // this is our fallback here
+        return uri.getPath();
     }
 }

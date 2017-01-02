@@ -30,9 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
                 "day INTEGER, "+
                 "year INTEGER, "+
                 "month INTEGER);");
-        db.execSQL("CREATE TABLE ACTIVITY (id INTEGER PRIMARY KEY, "+
-                "name TEXT, "+
-                "activity INTEGER);");
+        db.execSQL("CREATE TABLE ACTIVITY (_id INTEGER PRIMARY KEY, name TEXT, path TEXT);");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -48,10 +46,10 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
         contactValues.put("year", year);
         db.insert("SCHEDULE", null, contactValues);
     }
-    public static void insertActivity(SQLiteDatabase db, String name, int activity){
+    public static void insertActivity(SQLiteDatabase db, String name, String path){
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
-        contentValues.put("activity", activity);
+        contentValues.put("path", path);
         db.insert("ACTIVITY", null, contentValues);
     }
     public static Cursor showItems(SQLiteDatabase db,Context context ){
@@ -73,7 +71,17 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
             Toast toast = Toast.makeText(context, "Database Unavailable", Toast.LENGTH_SHORT);
             toast.show();
         }
-
+        return cursor;
+    }
+    public static Cursor listActivities(SQLiteDatabase db, Context context){
+        Cursor cursor = null;
+        try{
+            cursor = db.query("ACTIVITY", new String[] {"name", "path"}, null, null, null, null, null);
+        }
+        catch(SQLiteException e){
+            Toast toast = Toast.makeText(context, "Database Unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
         return cursor;
     }
 
