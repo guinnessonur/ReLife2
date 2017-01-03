@@ -47,8 +47,8 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
         db.insert("SCHEDULE", null, contactValues);
     }
     public static void deleteSchedule(SQLiteDatabase db, String name, String hour, String day, String month, String year){
-        Log.v("Query", "DELETE FROM SCHEDULE WHERE name = '"+name+"' AND hour = '"+hour+"' AND day = '"+day+"' AND month = '"+month+"' AND year = '"+ year+"';");
-        db.execSQL("DELETE FROM SCHEDULE WHERE name = '"+name+"' AND hour = '"+hour+"' AND day = '"+day+"' AND month = '"+month+"' AND year = '"+ year+"';");
+        Log.v("Query", "DELETE FROM SCHEDULE WHERE (name = '"+name+"' AND hour = '"+hour+"' AND day = '"+day+"' AND month = '"+month+"' AND year = '"+ year+"');");
+        db.execSQL("DELETE FROM SCHEDULE WHERE (name = '"+name+"' AND hour = '"+hour+"' AND day = '"+day+"' AND month = '"+(Integer.parseInt(month)-1)+"' AND year = '"+ year+"');");
     }
     public static void insertActivity(SQLiteDatabase db, String name, String path){
         ContentValues contentValues = new ContentValues();

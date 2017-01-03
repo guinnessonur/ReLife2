@@ -244,6 +244,7 @@ public class MainActivity extends Activity {
                         //Do nothing
                         break;
                 }
+                showSchedule();
             }
         };
 
