@@ -197,7 +197,7 @@ public class MainActivity extends Activity {
         db=helper.getWritableDatabase();
 
         iv.setImageResource(R.drawable.nature);
-
+//
         sigmaStarSaga();
 
         Button btn1 = (Button) findViewById(R.id.button1);
