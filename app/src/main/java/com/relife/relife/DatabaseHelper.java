@@ -50,21 +50,14 @@ public class DatabaseHelper extends SQLiteOpenHelper  {
         Log.v("Query", "DELETE FROM SCHEDULE WHERE (name = '"+name+"' AND hour = '"+hour+"' AND day = '"+day+"' AND month = '"+month+"' AND year = '"+ year+"');");
         db.execSQL("DELETE FROM SCHEDULE WHERE (name = '"+name+"' AND hour = '"+hour+"' AND day = '"+day+"' AND month = '"+(Integer.parseInt(month)-1)+"' AND year = '"+ year+"');");
     }
+    public static void deleteActivities(SQLiteDatabase db, String name){
+        db.execSQL("DELETE FROM ACTIVITY WHERE (name = \'"+name+"\');");
+    }
     public static void insertActivity(SQLiteDatabase db, String name, String path){
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("path", path);
         db.insert("ACTIVITY", null, contentValues);
-    }
-    public static Cursor showItems(SQLiteDatabase db,Context context ){
-        cursor=db.query("GROCERYLIST",new String[]{"element","state"},null,null,null,null,null);
-        return cursor;
-    }
-    public void update(SQLiteDatabase db, String data,String element,String state,int phoneNumber){
-        db.execSQL("Update "+data.toUpperCase()+" SET element='"+element+"', state = '"+state+"' WHERE phoneNumber="+phoneNumber+" ;");
-    }
-    public static void delete(SQLiteDatabase db, String data, String name){
-        db.execSQL("DELETE FROM " + data.toUpperCase() + " WHERE NAME = " + name);
     }
     public static Cursor list_items(SQLiteDatabase db, Context context){
         Cursor cursor = null;

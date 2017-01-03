@@ -39,8 +39,10 @@ public class MainActivity extends Activity {
     String[] drawables;
 
     public void showSchedule(){
+        sigmaStarSaga();
         LinearLayout sakuya = (LinearLayout) findViewById(R.id.list);
         sakuya.removeAllViews();
+        sigmaStarSaga();
         Cursor cursor = helper.list_items(db, getApplicationContext());
         if(cursor == null)
             return;
@@ -196,18 +198,8 @@ public class MainActivity extends Activity {
 
         iv.setImageResource(R.drawable.nature);
 
-        Cursor cursor = helper.listActivities(db, getApplicationContext());
-        if(cursor != null){
-            int size = cursor.getCount();
-            Log.v("Drawable Size: ", size+"");
-            drawables = new String[size];
-            cursor.moveToFirst();
-            for(int i = 0; i < size; i++){
-                drawables[i] = cursor.getString(1);
-                cursor.moveToNext();
-            }
-            cursor.close();
-        }
+        sigmaStarSaga();
+
         Button btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,6 +223,20 @@ public class MainActivity extends Activity {
         showSchedule();
     }
 
+    void sigmaStarSaga(){
+        Cursor cursor = helper.listActivities(db, getApplicationContext());
+        if(cursor != null){
+            int size = cursor.getCount();
+            drawables = new String[size];
+            cursor.moveToFirst();
+            for(int i = 0; i < size; i++){
+                drawables[i] = cursor.getString(1);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+    }
+
     public void uSureMatey(final String actName, final String hour, final String day, final String month, final String year){
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -244,7 +250,6 @@ public class MainActivity extends Activity {
                         //Do nothing
                         break;
                 }
-                showSchedule();
             }
         };
 

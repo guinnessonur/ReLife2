@@ -1,6 +1,8 @@
 package com.relife.relife;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +43,16 @@ public class Activities extends Activity {
         cursor.close();
         for(int i = 0; i < drawables.length; i++){
             LinearLayout ll = new LinearLayout(this);
+            ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LinearLayout queelaag = (LinearLayout) v;
+                    TextView tv = (TextView) queelaag.getChildAt(1);
+                    String x = tv.getText() +"";
+                    x = x.split(":")[1].substring(1);
+                    uSureMatey(x + "");
+                }
+            });
             ll.setOrientation(LinearLayout.HORIZONTAL);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -86,6 +99,7 @@ public class Activities extends Activity {
                 if(selectedImagePath == null){
                     Toast toast = Toast.makeText(getApplicationContext(), "Select an image you must", Toast.LENGTH_SHORT);
                     toast.show();
+                    return;
                 }
                 helper.insertActivity(db, name, selectedImagePath);
                 finish();
@@ -116,5 +130,27 @@ public class Activities extends Activity {
             return path;
         }
         return uri.getPath();
+    }
+    public void uSureMatey(final String name){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        helper.deleteActivities(db, name);
+                        finish();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //Do nothing
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Activities.this);
+        builder.setMessage("Delete " + name +" ?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener);
+        builder.show();
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.relife.relife">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -11,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".DragNDrop"
-            android:label="ReLife"></activity>
+            android:label="ReLife" />
         <activity
             android:name=".MainActivity"
             android:label="ReLife">
@@ -21,9 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DateActivity"></activity>
-        <activity android:name=".Activities">
-        </activity>
+        <activity android:name=".DateActivity" />
+        <activity android:name=".Activities"></activity>
+
     </application>
 
 </manifest>
