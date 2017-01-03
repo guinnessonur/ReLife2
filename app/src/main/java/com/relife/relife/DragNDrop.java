@@ -5,10 +5,14 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,8 +38,8 @@ public class DragNDrop extends Activity {
     static TextView[] textViews = new TextView[24];
     static int lastLayout = -1;
     static Context context;
-    static Drawable[] drawables = new Drawable[6];
-    static String[] drawableDesc = new String[6];
+    String[] drawables;
+    String[] drawableDesc;
 
     DatabaseHelper helper;
     SQLiteDatabase db;
@@ -43,6 +47,49 @@ public class DragNDrop extends Activity {
     int day;
     int month;
     int year;
+
+    void showMyActivities(){
+        LinearLayout layout = new LinearLayout(this);
+        LinearLayout.LayoutParams paramm = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        Cursor cursor = helper.listActivities(db, getApplicationContext());
+        if(cursor == null)
+            return;
+        int size = cursor.getCount();
+        drawables = new String[size];
+        drawableDesc = new String[size];
+        cursor.moveToFirst();
+        for(int i = 0; i < size; i++){
+            drawables[i] = cursor.getString(1);
+            drawableDesc[i] = cursor.getString(0);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        for(int i = 0; i < drawables.length; i++){
+            LinearLayout ll = new LinearLayout(this);
+            ll.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
+            param.setMargins(10, 0, 0, 0);
+            ll.setLayoutParams(param);
+            ll.setGravity(Gravity.CENTER_VERTICAL);
+            ImageView img = new ImageView(this);
+            img.setImageURI(Uri.parse(drawables[i]));
+            img.setScaleX(0.5f);
+            img.setScaleY(0.5f);
+            img.setOnTouchListener(new touchListener());
+            TextView text = new TextView(this);
+            text.setText("Activity Name: " + drawableDesc[i]);
+            text.setTextSize(16);
+            ll.addView(img);
+            ll.addView(text);
+            layout.addView(ll);
+        }
+        ScrollView sv = (ScrollView) findViewById(R.id.activities);
+        sv.removeAllViews();
+        sv.addView(layout);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,43 +121,7 @@ public class DragNDrop extends Activity {
         for(int i = 0; i < layouts.length; i++){
             layouts[i].setOnDragListener(new dragListener());
         }
-        LinearLayout scrollLayout = new LinearLayout(this);
-        scrollLayout.setOrientation(LinearLayout.VERTICAL);
-        drawables[0] = getDrawable(R.drawable.sleep);
-        drawables[1] = getDrawable(R.drawable.gamecontroller);
-        drawables[2] = getDrawable(R.drawable.openbook);
-        drawables[3] = getDrawable(R.drawable.knight);
-        drawables[4] = getDrawable(R.drawable.soccer);
-        drawables[5] = getDrawable(R.drawable.dumbbell);
-        drawableDesc[0] = "Sleep";
-        drawableDesc[1] = "Game";
-        drawableDesc[2] = "Study";
-        drawableDesc[3] = "Chess";
-        drawableDesc[4] = "Soccer";
-        drawableDesc[5] = "Work Out";
-        for(int i = 0; i < drawables.length; i++){
-            LinearLayout ll = new LinearLayout(this);
-            ll.setOrientation(LinearLayout.HORIZONTAL);
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
-            param.setMargins(10, 0, 0, 0);
-            ll.setLayoutParams(param);
-            ll.setGravity(Gravity.CENTER_VERTICAL);
-            ImageView img = new ImageView(this);
-            img.setImageDrawable(drawables[i]);
-            img.setScaleX(0.5f);
-            img.setScaleY(0.5f);
-            img.setOnTouchListener(new touchListener());
-            TextView text = new TextView(this);
-            text.setText("Activity Name: " + drawableDesc[i]);
-            text.setTextSize(16);
-            ll.addView(img);
-            ll.addView(text);
-            scrollLayout.addView(ll);
-        }
-        ScrollView scrollView = (ScrollView) findViewById(R.id.activities);
-        scrollView.addView(scrollLayout);
+        showMyActivities();
         Button button = (Button) findViewById(R.id.done);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,12 +131,31 @@ public class DragNDrop extends Activity {
                     if (view instanceof ImageView) {
                         ImageView imageView = (ImageView) view;
                         int which = -1;
-                        for(int j = 0; j < DragNDrop.drawables.length; j++){
-                            if(DragNDrop.drawables[j].equals(imageView.getDrawable())){
+                        //Uri.parse(drawables[which])
+                        for(int j = 0; j < drawables.length; j++){
+                            ImageView anri = new ImageView(context);
+                            anri.setImageURI(Uri.parse(drawables[j]));
+
+                            anri.setDrawingCacheEnabled(true);
+                            anri.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                            anri.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+                            anri.buildDrawingCache(true);
+
+                            imageView.setDrawingCacheEnabled(true);
+                            imageView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                            imageView.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+                            imageView.buildDrawingCache(true);
+
+                            if(anri.getDrawingCache().sameAs(imageView.getDrawingCache())){
                                 which = j;
                                 break;
                             }
+                            anri.setDrawingCacheEnabled(false);
+                            imageView.setDrawingCacheEnabled(false);
                         }
+                        Log.v("Which", which + "");
                         if(which != -1){
                             helper.insertSchedule(db, drawableDesc[which], which, i, day, month, year);
                             Log.v("insertDatabase", drawableDesc[which] + " " + which + " " + i + " " + day + " " + month + " " + year);

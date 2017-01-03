@@ -1,5 +1,6 @@
 package com.relife.relife;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,8 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Activities extends AppCompatActivity {
+public class Activities extends Activity {
 
     DatabaseHelper helper;
     SQLiteDatabase db;
@@ -35,6 +37,7 @@ public class Activities extends AppCompatActivity {
             drawableDesc[i] = cursor.getString(0);
             cursor.moveToNext();
         }
+        cursor.close();
         for(int i = 0; i < drawables.length; i++){
             LinearLayout ll = new LinearLayout(this);
             ll.setOrientation(LinearLayout.HORIZONTAL);
@@ -80,6 +83,10 @@ public class Activities extends AppCompatActivity {
                 //Add database
                 EditText nameText = (EditText) findViewById(R.id.actname);
                 String name = nameText.getText().toString();
+                if(selectedImagePath == null){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Select an image you must", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
                 helper.insertActivity(db, name, selectedImagePath);
                 finish();
             }

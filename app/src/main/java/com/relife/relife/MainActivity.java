@@ -1,13 +1,20 @@
 package com.relife.relife;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.AnyRes;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +25,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.io.InputStream;
 
 public class MainActivity extends Activity {
     DatabaseHelper helper;
@@ -100,6 +109,7 @@ public class MainActivity extends Activity {
             }
             cursor.moveToNext();
         }
+        cursor.close();
     }
 
     @Override
@@ -112,23 +122,17 @@ public class MainActivity extends Activity {
         db=helper.getWritableDatabase();
 
         iv.setImageResource(R.drawable.nature);
+
         Cursor cursor = helper.listActivities(db, getApplicationContext());
         if(cursor != null){
             int size = cursor.getCount();
-            if(size == 0){
-                helper.insertActivity(db, "Sleep", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/sleep")));
-                helper.insertActivity(db, "Game", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/gamecontroller")));
-                helper.insertActivity(db, "Study", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/openbook")));
-                helper.insertActivity(db, "Chess", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/knight")));
-                helper.insertActivity(db, "Soccer", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/soccer")));
-                helper.insertActivity(db, "Work Out", getPath(Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/drawable/dumbbell")));
-            }
             drawables = new String[size];
             cursor.moveToFirst();
             for(int i = 0; i < size; i++){
                 drawables[i] = cursor.getString(1);
                 cursor.moveToNext();
             }
+            cursor.close();
         }
         Button btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -173,5 +177,21 @@ public class MainActivity extends Activity {
         }
         // this is our fallback here
         return uri.getPath();
+    }
+    public static final Uri getUriToResource(@NonNull Context context, @AnyRes int resId) throws Resources.NotFoundException {
+        /** Return a Resources instance for your application's package. */
+        Resources res = context.getResources();
+        /**
+         * Creates a Uri which parses the given encoded URI string.
+         * @param uriString an RFC 2396-compliant, encoded URI
+         * @throws NullPointerException if uriString is null
+         * @return Uri for this given uri string
+         */
+        Uri resUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + res.getResourcePackageName(resId)
+                + '/' + res.getResourceTypeName(resId)
+                + '/' + res.getResourceEntryName(resId));
+        /** return uri */
+        return resUri;
     }
 }
