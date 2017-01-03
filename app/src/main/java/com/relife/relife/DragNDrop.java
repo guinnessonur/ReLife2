@@ -31,8 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //saaa
-//asss
 public class DragNDrop extends Activity {
+//asss
 
     static LinearLayout[] layouts = new LinearLayout[24];
     static TextView[] textViews = new TextView[24];

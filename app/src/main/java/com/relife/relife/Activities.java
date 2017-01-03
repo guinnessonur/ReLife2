@@ -102,13 +102,9 @@ public class Activities extends Activity {
         }
     }
     public String getPath(Uri uri) {
-        // just some safety built in
         if( uri == null ) {
-            // TODO perform some logging or show user feedback
             return null;
         }
-        // try to retrieve the image from the media store first
-        // this will only work for images selected from gallery
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         if( cursor != null ){
@@ -119,7 +115,6 @@ public class Activities extends Activity {
             cursor.close();
             return path;
         }
-        // this is our fallback here
         return uri.getPath();
     }
 }

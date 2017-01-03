@@ -1,8 +1,10 @@
 package com.relife.relife;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -58,7 +60,32 @@ public class MainActivity extends Activity {
             int hour = Integer.parseInt(cursor.getString(2));
             String description = cursor.getString(0);
             if(last_day == day && last_month == month && last_year == year){
-                LinearLayout knowledge = new LinearLayout(this);
+                final LinearLayout knowledge = new LinearLayout(this);
+                knowledge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LinearLayout parentest = (LinearLayout) v.getParent();
+                        int indexOfMyView = parentest.indexOfChild(v);
+                        int indexOfText = -1;
+                        for(int f = indexOfMyView; f > -1; f--){
+                            if(parentest.getChildAt(f) instanceof TextView){
+                                indexOfText = f;
+                                break;
+                            }
+                        }
+                        //Child 1 == TextView
+                        String actName = ((TextView)((LinearLayout)v).getChildAt(1)).getText() + "";
+                        String hour = actName.split(" ")[1].split(":")[0];
+                        actName = actName.split(":")[3];
+                        actName = actName.substring(1);
+                        String[] date = (((TextView)parentest.getChildAt(indexOfText)).getText() + "").split("/");
+                        String day = date[0];
+                        String month = date[1];
+                        String year = date[2];
+                        uSureMatey(actName, hour, day, month, year);
+                        showSchedule();
+                    }
+                });
                 knowledge.setOrientation(LinearLayout.HORIZONTAL);
                 LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -96,6 +123,31 @@ public class MainActivity extends Activity {
                 patchouli.setLayoutParams(textParam);
                 patchouli.setText(day + "/" + month + "/" + year);
                 LinearLayout knowledge = new LinearLayout(this);
+                knowledge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LinearLayout parentest = (LinearLayout) v.getParent();
+                        int indexOfMyView = parentest.indexOfChild(v);
+                        int indexOfText = -1;
+                        for(int f = indexOfMyView; f > -1; f--){
+                            if(parentest.getChildAt(f) instanceof TextView){
+                                indexOfText = f;
+                                break;
+                            }
+                        }
+                        //Child 1 == TextView
+                        String actName = ((TextView)((LinearLayout)v).getChildAt(1)).getText() + "";
+                        String hour = actName.split(" ")[1].split(":")[0];
+                        actName = actName.split(":")[3];
+                        actName = actName.substring(1);
+                        String[] date = (((TextView)parentest.getChildAt(indexOfText)).getText() + "").split("/");
+                        String day = date[0];
+                        String month = date[1];
+                        String year = date[2];
+                        uSureMatey(actName, hour, day, month, year);
+                        showSchedule();
+                    }
+                });
                 knowledge.setOrientation(LinearLayout.HORIZONTAL);
                 LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -146,6 +198,7 @@ public class MainActivity extends Activity {
         Cursor cursor = helper.listActivities(db, getApplicationContext());
         if(cursor != null){
             int size = cursor.getCount();
+            Log.v("Drawable Size: ", size+"");
             drawables = new String[size];
             cursor.moveToFirst();
             for(int i = 0; i < size; i++){
@@ -177,6 +230,27 @@ public class MainActivity extends Activity {
         showSchedule();
     }
 
+    public void uSureMatey(final String actName, final String hour, final String day, final String month, final String year){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        helper.deleteSchedule(db, actName, hour, day, month, year);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //Do nothing
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Delete " + actName +" ?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener);
+        builder.show();
+    }
     public String getPath(Uri uri) {
         // just some safety built in
         if( uri == null ) {
