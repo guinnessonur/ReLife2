@@ -136,6 +136,7 @@ public class MainActivity extends Activity {
                             }
                         }
                         //Child 1 == TextView
+                        //
                         String actName = ((TextView)((LinearLayout)v).getChildAt(1)).getText() + "";
                         String hour = actName.split(" ")[1].split(":")[0];
                         actName = actName.split(":")[3];
