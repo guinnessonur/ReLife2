@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends Activity {
     DatabaseHelper helper;
@@ -50,7 +53,7 @@ public class MainActivity extends Activity {
             // 2 == hour
             int which = Integer.parseInt(cursor.getString(1));
             int day = Integer.parseInt(cursor.getString(3));
-            int month = Integer.parseInt(cursor.getString(4));
+            int month = Integer.parseInt(cursor.getString(4)) + 1;
             int year = Integer.parseInt(cursor.getString(5));
             int hour = Integer.parseInt(cursor.getString(2));
             String description = cursor.getString(0);
@@ -70,6 +73,14 @@ public class MainActivity extends Activity {
                 TextView text = new TextView(this);
                 text.setText("Time: " + hour + " :00 Activity Name: " + description);
                 text.setTextSize(16);
+
+                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                String[] datey = date.split("-");
+
+                if(Integer.parseInt(datey[0]) > year || Integer.parseInt(datey[1]) > month || Integer.parseInt(datey[2]) > day){
+                    text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+
                 knowledge.addView(img);
                 knowledge.addView(text);
                 sakuya.addView(knowledge);
@@ -99,6 +110,15 @@ public class MainActivity extends Activity {
                 TextView text = new TextView(this);
                 text.setText("Time: " + hour + ":00 Activity Name: " + description);
                 text.setTextSize(16);
+
+                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                String[] datey = date.split("-");
+                Log.v("Date", date + "year: " + year + "month: " + month + "day: " + day);
+
+                if(Integer.parseInt(datey[0]) > year || Integer.parseInt(datey[1]) > month || Integer.parseInt(datey[2]) > day){
+                    text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+
                 knowledge.addView(img);
                 knowledge.addView(text);
                 sakuya.addView(patchouli);
